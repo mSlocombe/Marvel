@@ -17,6 +17,6 @@ class ComicListViewModel(
 
     val items: Flow<PagingData<Comic>> = Pager(
         config = PagingConfig(ITEMS_PER_PAGE, enablePlaceholders = false),
-        pagingSourceFactory = { repository.comicPagingSource() }
+        pagingSourceFactory = { repository }
     ).flow.cachedIn(viewModelScope)
 }
