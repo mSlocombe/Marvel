@@ -1,5 +1,6 @@
 package com.github.mslocombe.paging
 
+import com.github.mslocombe.BuildConfig
 import com.github.mslocombe.ui.theme.comic.list.generateAuth
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -20,7 +21,7 @@ class MarvelApi(
                     append("offset", offset.toString())
                     append("limit", "100")
                     append("ts", hash.timestamp.toString())
-                    append("apikey", "0d80096c942acc5a31f45594718ef72d")
+                    append("apikey", BuildConfig.marvel_public_api_key)
                     append("hash", hash.hash)
                 }
             }
