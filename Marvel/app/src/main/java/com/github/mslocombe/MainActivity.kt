@@ -3,12 +3,20 @@ package com.github.mslocombe
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import coil.compose.SubcomposeAsyncImage
 import com.github.mslocombe.ui.theme.MarvelTheme
 import com.github.mslocombe.ui.theme.comic.list.ComicListView
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,11 +24,30 @@ class MainActivity : ComponentActivity() {
         setContent {
             MarvelTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    ComicListView()
+                val navController = rememberNavController()
+
+                NavHost(navController = navController, startDestination = "comic/list") {
+                    composable(route = "comic/list") {
+                        ComicListView()
+                    }
+
+                    composable(route = "comic/detail/{comic_id}") {
+                        val id = URLDecoder.decode(
+                            it.arguments?.getString("comic_id"),
+                            StandardCharsets.UTF_8.toString()
+                        )
+                        SubcomposeAsyncImage(
+                            modifier = Modifier.fillMaxSize(),
+                            model = id,
+                            contentDescription = null,
+                            loading = {
+                                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    CircularProgressIndicator()
+                                }
+                            },
+                            contentScale = ContentScale.FillWidth
+                        )
+                    }
                 }
             }
         }

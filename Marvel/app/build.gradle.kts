@@ -57,8 +57,12 @@ android {
 }
 
 dependencies {
-    val composeVersion = "2023.08.00"
-    implementation("androidx.core:core-ktx:1.10.1")
+    val composeVersion = "2024.02.01"
+    val nav_version = "2.7.7"
+
+    androidTestImplementation(project(":app:sharedtest"))
+
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.0")
     implementation(platform("androidx.compose:compose-bom:$composeVersion"))
@@ -67,6 +71,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose")
     implementation("androidx.compose.material3:material3")
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
     //ktor
     val ktorVersion = "2.3.7"

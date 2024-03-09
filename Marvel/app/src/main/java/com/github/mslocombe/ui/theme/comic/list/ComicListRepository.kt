@@ -44,11 +44,12 @@ class ComicListRepository(
         return (0..<results.length()).map { index ->
             val thisComic = results.getJSONObject(index)
             val thumbnail = thisComic.getJSONObject("thumbnail")
-            val thumbnailPath = "${thumbnail.getString("path")}/${ImageSize.STANDARD_MEDIUM.key}.${
+            val thumbnailPath = "${thumbnail.getString("path")}/${ImageSize.PORTRAIT_216_324.key}.${
                 thumbnail.getString("extension")
             }"
             Comic(
                 thisComic.getString("title"),
+                thisComic.getString("description"),
                 thumbnailPath
             )
         }
