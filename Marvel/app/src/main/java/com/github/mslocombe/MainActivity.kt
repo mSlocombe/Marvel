@@ -3,9 +3,15 @@ package com.github.mslocombe
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -28,7 +34,14 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(navController = navController, startDestination = "comic/list") {
                     composable(route = "comic/list") {
-                        ComicListView()
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            ComicListView(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f, true)
+                            )
+                            AttributionText()
+                        }
                     }
 
                     composable(route = "comic/detail/{comic_id}") {
@@ -36,6 +49,7 @@ class MainActivity : ComponentActivity() {
                             it.arguments?.getString("comic_id"),
                             StandardCharsets.UTF_8.toString()
                         )
+
                         SubcomposeAsyncImage(
                             modifier = Modifier.fillMaxSize(),
                             model = id,
@@ -52,4 +66,14 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun AttributionText() {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background),
+        text = "Data provided by Marvel. © 2014 Marvel"
+    )
 }

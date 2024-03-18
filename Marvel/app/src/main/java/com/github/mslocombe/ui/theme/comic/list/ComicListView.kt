@@ -13,10 +13,11 @@ import androidx.paging.compose.collectAsLazyPagingItems
 
 @Composable
 fun ComicListView(
+    modifier: Modifier = Modifier,
     viewModel: ComicListViewModel = viewModel(ComicListViewModelImpl::class.java)
 ) {
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         color = MaterialTheme.colorScheme.background
     ) {
         val comics = viewModel.items.collectAsLazyPagingItems()

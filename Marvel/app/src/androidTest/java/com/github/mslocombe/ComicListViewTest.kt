@@ -17,7 +17,7 @@ class ComicListViewTest {
     fun loadingCircleShownOnEntry() {
         val viewModel = ComicListViewModelMock()
         compose.setContent {
-            ComicListView(viewModel)
+            ComicListView(viewModel = viewModel)
         }
 
         compose.onNodeWithTag("ComicListLoading").assertIsDisplayed()
